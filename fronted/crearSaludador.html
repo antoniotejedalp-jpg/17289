@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Saludador</title>
+</head>
+<body>
+    <h1>Crear Saludador</h1>
+    <!--
+    <form action="http://localhost:8081/crearSaludador" method="POST">
+        <input type="submit">
+    </form>
+    -->
+    <label for="">Nombre:</label>
+    <input type="text" id="nombre">
+
+    <button onclick="crear()">Crear saludador</button>
+
+    <script>
+        url = "http://localhost:8081/crearSaludador";
+        nombre = document.getElementById("nombre").value
+        console.log(nombre)
+
+        function crear(){
+            //no enviar objetos al backend debemos transformarlos a cadena
+            // let cuerpo1 = JSON.parse('{"contenido": "ejemplo"}');
+            //console.log(cuerpo1)
+            //alerta cuerpo1
+            let cuerpo = JSON.stringify(`{"contenido": "${nombre}"}`);
+            console.log(cuerpo)
+
+            fetch(url, {
+                method: "POST", 
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body:   (cuerpo)
+            })
+            .then(async respuesta => {
+                console.log(await respuesta)
+            })
+            .catch(error =>{
+                console.log(error)
+            })
+        }
+    </script>
+</body>
+</html>

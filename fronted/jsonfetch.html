@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>json/fetch</title>
+</head>
+<body>
+    <h1>json/fetch</h1>
+    <button onclick="llamar()">fetch</button>
+    <button onclick="llamar2()">Enviar con XMLHttpRequest</button>
+    <button onclick="llamar3()">fetch asyn/await</button>
+    <button onclick ="llamar4()">fetch blob</button>
+    <button onclick="llamar5()">???</button>
+    <img src="" alt="Imagen cargada desde la URL" id="img1">
+    <img src="https://picsum.photos/id/2/200/300" alt="" id="img2">
+    <a href="https://picsum.photos/id/2/200/300" target="_blank">Ver imagen</a>
+
+    <script>
+        elemento_imagen = document.getElementById("img1")
+        function llamar(){
+            url = "https://jsonplaceholder.typicode.com/users/1";
+            parametros = ""
+            fetch(url)
+            .then(respuesta=>{
+                usuario = respuesta.json()
+                console.log(usuario)
+                return usuario
+            })
+            .then(datos=>{
+                console.log(datos)
+                u = datos
+                console.log(u.name)
+            })
+
+            .catch(error =>{
+                console.log(error)
+            })
+        }
+
+        function llamar2() {
+            /*
+            const solicitud = new XMLHttpRequest();
+            solicitud.open("GET", "https://jsonplaceholder.typicode.com/users/1");
+
+            solicitud.onload = function () {
+                if (solicitud.status >= 200 && solicitud.status < 300) {
+                    const usuario = JSON.parse(solicitud.responseText);
+                    console.log(usuario);
+                    console.log(usuario.name);
+                } else {
+                    console.error("Error en la solicitud:", solicitud.status);
+                }
+            };
+
+            solicitud.onerror = function () {
+                console.error("No se pudo completar la solicitud.");
+            };
+
+            solicitud.send();
+            */
+           url = "https://jsonplaceholder.typicode.com/users/1";
+           xhttp = new XMLHttpRequest();
+           xhttp.onload = function() {
+            usuario = xhttp.response
+            console.log (JSON.parse(usuario))
+           }
+            xhttp.open("GET", url)
+            xhttp.send()
+        }
+
+        function llamar3(){
+            url = "https://jsonplaceholder.typicode.com/users/1";
+            parametros = ""
+            fetch(url)
+            .then(async respuesta=>{
+                console.log("respuesta")
+                console.log(respuesta)
+                usuario = await respuesta.json()
+                console.log(usuario)
+                return usuario
+            })
+            .then(datos=>{
+                console.log(datos)
+                u = datos
+                console.log(u.name)
+            })
+
+            .catch(error =>{
+                console.log(error)
+            })
+        }
+        
+        function llamar4(){
+            url = "https://picsum.photos/id/1/200/300";
+            fetch(url)
+            .then(respuesta=>{
+                console.log(respuesta)
+                r = respuesta.blob()
+                return r
+            })
+            .then(datos=>{
+                console.log(datos)
+                //console.log(URL.createObjectURL(datos))
+                imagen = URL.createObjectURL(datos)
+                elemento_imagen.src = imagen
+                console.log(imagen)
+                //document.getElementById("img1").src = URL.createObjectURL(datos)
+            })
+
+            .catch(error =>{
+                console.log(error)
+            })
+        }
+    
+        function llamar5(){
+            url = ""
+            fetch()
+            .then()
+            .then()
+            .catch()
+        }
+    </script>
+</body>
+</html>
